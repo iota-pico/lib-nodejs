@@ -1,0 +1,16 @@
+.history
+.vscode
+.nyc_output
+node_modules
+src/**/*
+test/**/*
+.travis.yml
+tsconfig.json
+tslint.json
+*.tgz
+package-lock.*
+.nsprc
+.nycrc
+coverage
+webpack.config.*
+.babelrc
