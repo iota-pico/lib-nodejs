@@ -1,7 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const packageJson = require('./package.json');
 
 const pkgFolder = path.join(__dirname, './pkg');
 const bootstrapFile = path.join(pkgFolder, 'bootstrap.js');
@@ -17,12 +15,6 @@ fs.writeFileSync(bootstrapFile, "exports.default = require(\"../dist/index\");")
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const plugins = [];
-
-if (isProd) {
-    plugins.push(new UglifyJsPlugin());
-}
-
 module.exports = {
     entry: bootstrapFile,
     output: {
@@ -34,9 +26,16 @@ module.exports = {
         umdNamedDefine: true
     },
     target: "node",
-    externals: [{
-        "ffi": "ffi"
-    }],
+    externals: {
+        "ffi": "ffi",
+        "big-integer": {
+            "amd": "big-integer",
+            "commonjs": "big-integer",
+            "commonjs2": "big-integer",
+            "root": "bigInt"
+        }
+    },
+    mode: isProd ? "production": "development",
     devtool: isProd ? undefined : "inline-source-map",
     module: {
         rules: [
@@ -70,7 +69,6 @@ module.exports = {
             }
         ]
     },
-    plugins,
     node: {
         __dirname: false,
         __filename: false,

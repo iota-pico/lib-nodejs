@@ -34,11 +34,13 @@
         "pkg-clean": "rimraf ./pkg/*",
         "pkg-dev": "cross-env NODE_ENV=development webpack --progress",
         "pkg-prod": "cross-env NODE_ENV=production webpack --progress",
+        "pkg-dts": "node ./dist/build-dts.js",
         "pkg-finalise": "rimraf ./pkg/bootstrap.js",
-        "pkg": "npm-run-all pkg-clean pkg-dev pkg-prod pkg-finalise",
+        "pkg": "npm-run-all pkg-clean pkg-dev pkg-prod pkg-dts pkg-finalise",
         "dist": "npm-run-all build pkg"
     },
     "dependencies": {
+        "big-integer": "^1.6.26",
         "ffi": "^2.2.0"
     },
     "devDependencies": {
@@ -60,7 +62,6 @@
         "@types/mocha": "^2.2.46",
         "babel-loader": "^8.0.0-beta.0",
         "babel-plugin-transform-builtin-extend": "^1.1.2",
-        "big-integer": "^1.6.26",
         "chai": "^4.1.2",
         "copy": "^0.3.1",
         "coveralls": "^3.0.0",
@@ -79,6 +80,7 @@
         "typedoc-plugin-markdown": "^1.0.12",
         "typescript": "^2.7.1",
         "uglifyjs-webpack-plugin": "^1.2.2",
-        "webpack": "^3.11.0"
+        "webpack": "^4.1.1",
+        "webpack-cli": "^2.0.10"
     }
 }
