@@ -13,7 +13,7 @@ async function buildDts(imports: string[], outputFilename: string, sources: stri
 
     for (let i: number = 0; i < sources.length; i++) {
         const moduleDistPath: string = path.join("./node_modules/", sources[i], "dist");
-        console.log(`Checking in ${moduleDistPath}`);
+        console.log(`Merging ${moduleDistPath}`);
 
         const indexFile: string = fs.readFileSync(path.join(moduleDistPath, "index.d.ts")).toString();
 

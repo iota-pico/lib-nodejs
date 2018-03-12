@@ -326,15 +326,15 @@ export interface INetworkEndPoint {
      */
     getHost(): string;
     /**
-     * The path to the endpoint.
-     * @returns The path.
-     */
-    getPath(): string;
-    /**
      * The port of the endpoint.
      * @returns The port.
      */
     getPort(): number;
+    /**
+     * The path to the endpoint.
+     * @returns The path.
+     */
+    getRootPath(): string;
     /**
      * The complete uri.
      * @returns The uri.
@@ -445,10 +445,10 @@ export class NetworkEndPoint implements INetworkEndPoint {
      * Create an instance of NetworkEndPoint.
      * @param protocol The protocol to access the endpoint with.
      * @param host The host name or ip of the endpoint.
-     * @param path The path to the endpoint.
      * @param port The port of the endpoint.
+     * @param rootPath The path to the endpoint.
      */
-    constructor(protocol: NetworkProtocol, host: string, path: string, port: number);
+    constructor(protocol: NetworkProtocol, host: string, port: number, rootPath?: string);
     /**
      * The protocol to access the endpoint with.
      * @return The protocol.
@@ -463,7 +463,7 @@ export class NetworkEndPoint implements INetworkEndPoint {
      * The path to the endpoint.
      * @returns The path.
      */
-    getPath(): string;
+    getRootPath(): string;
     /**
      * The port of the endpoint.
      * @returns The port.
@@ -1075,10 +1075,11 @@ export class ApiClient implements IApiClient {
      * @param networkClient The network client to communicate through.
      * @param apiVersion The API version to send with the requests
      * @param additionalHeaders Extra headers to send with the requests.
+     * @param logger Logger to send communication info to.
      */
     constructor(networkClient: INetworkClient, apiVersion?: string, additionalHeaders?: {
         [header: string]: string;
-    });
+    }, logger?: ILogger);
     /**
      * Returns information about your node.
      * @returns Promise which resolves to the getNodeInfo response object or rejects with error.
@@ -2344,8 +2345,9 @@ export class TransactionClient implements ITransactionClient {
      * @param proofOfWork Proof of work module to use, if undefined will use remote.
      * @param timeService A class which can provide the time.
      * @param backgroundTaskService A class which can provide background tasks.
+     * @param logger Logger to send transaction info to.
      */
-    constructor(apiClient: IApiClient, proofOfWork?: IProofOfWork, timeService?: ITimeService, backgroundTaskService?: IBackgroundTaskService);
+    constructor(apiClient: IApiClient, proofOfWork?: IProofOfWork, timeService?: ITimeService, backgroundTaskService?: IBackgroundTaskService, logger?: ILogger);
     /**
      * Returns the list of transaction in progress.
      * @returns Promise which resolves to a list of hashes or rejects with error.

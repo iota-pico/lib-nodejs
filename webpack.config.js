@@ -22,7 +22,11 @@ module.exports = {
         filename: "iota-pico-lib-nodejs" + (isProd ? '.min' : '') + '.js',
         libraryTarget: 'commonjs2',
         libraryExport: 'default',
-        library: "IotaPico",
+        library: {
+            root: "IotaPico",
+            amd: "@iota-pico/lib-browser",
+            commonjs: "@iota-pico/lib-browser"
+        },
         umdNamedDefine: true
     },
     target: "node",
@@ -36,7 +40,8 @@ module.exports = {
         }
     },
     mode: isProd ? "production": "development",
-    devtool: isProd ? undefined : "inline-source-map",
+    // devtool: undefined,//isProd ? undefined : "inline-source-map",
+    // waiting on https://github.com/webpack/webpack/pull/6641
     module: {
         rules: [
             {
