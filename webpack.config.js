@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const pkgFolder = path.join(__dirname, './pkg');
 const bootstrapFile = path.join(pkgFolder, 'bootstrap.js');
@@ -14,6 +15,11 @@ if (!isDir) {
 fs.writeFileSync(bootstrapFile, "exports.default = require(\"../dist/index\");");
 
 const isProd = process.env.NODE_ENV === 'production';
+
+const plugins = [];
+if (isProd) {
+    plugins.push(new UglifyJsPlugin());
+}
 
 module.exports = {
     entry: bootstrapFile,
@@ -39,9 +45,8 @@ module.exports = {
             "root": "bigInt"
         }
     },
-    mode: isProd ? "production": "development",
-    // devtool: undefined,//isProd ? undefined : "inline-source-map",
-    // waiting on https://github.com/webpack/webpack/pull/6641
+    // mode: isProd ? "production": "development",
+    devtool: isProd ? undefined : "inline-source-map",
     module: {
         rules: [
             {
@@ -77,5 +82,6 @@ module.exports = {
     node: {
         __dirname: false,
         __filename: false,
-    }
+    },
+    plugins
 };

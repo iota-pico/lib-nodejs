@@ -14,5 +14,5 @@ __export(require("@iota-pico/pal-nodejs"));
 __export(require("@iota-pico/pow-box"));
 __export(require("@iota-pico/pow-js"));
 __export(require("@iota-pico/pow-nodejs"));
-__export(require("@iota-pico/pow-wasm"));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBOztHQUVHO0FBQ0gscUNBQWdDO0FBQ2hDLHFDQUFnQztBQUNoQyxvQ0FBK0I7QUFDL0IsdUNBQWtDO0FBQ2xDLHlDQUFvQztBQUNwQywyQ0FBc0M7QUFDdEMsd0NBQW1DO0FBQ25DLHVDQUFrQztBQUNsQywyQ0FBc0M7QUFDdEMseUNBQW9DIn0=
+// export * from "@iota-pico/pow-wasm";
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBOztHQUVHO0FBQ0gscUNBQWdDO0FBQ2hDLHFDQUFnQztBQUNoQyxvQ0FBK0I7QUFDL0IsdUNBQWtDO0FBQ2xDLHlDQUFvQztBQUNwQywyQ0FBc0M7QUFDdEMsd0NBQW1DO0FBQ25DLHVDQUFrQztBQUNsQywyQ0FBc0M7QUFDdEMsdUNBQXVDIn0=

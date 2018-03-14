@@ -10,5 +10,5 @@ export * from "@iota-pico/pal-nodejs";
 export * from "@iota-pico/pow-box";
 export * from "@iota-pico/pow-js";
 export * from "@iota-pico/pow-nodejs";
-export * from "@iota-pico/pow-wasm";
+// export * from "@iota-pico/pow-wasm";
 

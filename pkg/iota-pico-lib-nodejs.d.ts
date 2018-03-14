@@ -8,6 +8,10 @@ import bigInt from "big-integer";
  */
 export class CoreError extends Error {
     /**
+     * The domain of the error.
+     */
+    domain: string;
+    /**
      * Additional details about the error.
      */
     additional?: {
@@ -36,6 +40,21 @@ export class CoreError extends Error {
      * Format the error to a readable version.
      */
     format(): string;
+}
+
+/**
+ * A network implementation of an error.
+ */
+export class NetworkError extends CoreError {
+    /**
+     * Create an instance of NetworkError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
 }
 
 /**
@@ -553,6 +572,10 @@ export class Address {
      */
     static readonly LENGTH_WITH_CHECKSUM: number;
     /**
+     * An empty hash all 9s.
+     */
+    static readonly EMPTY: Address;
+    /**
      * Create address from trytes.
      * @param address The trytes to create the address from.
      * @returns An instance of Address.
@@ -846,7 +869,7 @@ export class Transaction {
     toTrytes(): Trytes;
     /**
      * Get the string view of the object.
-     * @returns string of the trytes.
+     * @returns string view of the object.
      */
     toString(): string;
 }
@@ -1044,6 +1067,15 @@ export class Trytes {
  * A data implementation of an error.
  */
 export class DataError extends CoreError {
+    /**
+     * Create an instance of DataError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
 }
 
 /**
@@ -1195,6 +1227,15 @@ export class ApiClient implements IApiClient {
  * An api implementation of an error.
  */
 export class ApiError extends CoreError {
+    /**
+     * Create an instance of ApiError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
 }
 
 /**
@@ -1791,6 +1832,15 @@ export class Sha3 {
  * A crypto implementation of an error.
  */
 export class CryptoError extends CoreError {
+    /**
+     * Create an instance of CryptoError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
 }
 
 /**
@@ -1802,6 +1852,54 @@ export class SpongeFactory extends FactoryBase<ISponge> {
      * @returns The factory instance.
      */
     static instance(): FactoryBase<ISponge>;
+}
+
+/**
+ * ISS Hashing functions.
+ * Converted https://github.com/iotaledger/iri/src/main/java/com/iota/iri/hash/ISS.java
+ */
+export class ISS {
+    /**
+     * Create the key for the seed.
+     * @param seed The seed to create the key for.
+     * @param index The index to use for the seed.
+     * @param length The security level to create the key.
+     * @returns the key.
+     */
+    static key(seed: Hash, index: number, security: AddressSecurity): Int8Array;
+    /**
+     * Create the digests for the given subseed.
+     * @param subseed To create the digests for.
+     * @returns The digests.
+     */
+    static digests(subseed: Int8Array): Int8Array;
+    /**
+     * Create the address for the digests.
+     * @param digests The digests to create the address for.
+     * @returns the address trits.
+     */
+    static address(digests: Int8Array): Int8Array;
+    /**
+     * Create digest of the normalized bundle fragment.
+     * @param normalizedBundleFragment The fragment to create digest.
+     * @param signatureMessageFragment The trits for signature message fragment.
+     * @returns The digest of the bundle and signature message fragment.
+     */
+    static digest(normalizedBundleFragment: Int8Array, signatureMessageFragment: Int8Array): Int8Array;
+    /**
+     * Create a normalized bundle.
+     * @param bundleHash The hash of the bundle.
+     * @returns the normalized bundle.
+     */
+    static normalizedBundle(bundleHash: Hash): Int8Array;
+    /**
+     * Validate the signature fragments from the address.
+     * @param expectedAddress The address.
+     * @param signatureMessageFragments The signature message fragments.
+     * @param bundleHash The hash for the bundle.
+     * @returns True if the signature message fragment are signed by the expected address.
+     */
+    static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash): boolean;
 }
 
 /**
@@ -1872,12 +1970,11 @@ export interface IProofOfWork {
  */
 export interface ISponge {
     /**
-     * Get the constant for the hasher.
-     * @returns The constants.
+     * Get the constant for the spone.
+     * @name The name of the contant to get.
+     * @returns The constant.
      */
-    getConstants(): {
-        [name: string]: number;
-    };
+    getConstant(name: string): number;
     /**
      * Get the state.
      * @returns The state.
@@ -1922,12 +2019,11 @@ export class Curl implements ISponge {
      */
     constructor(rounds?: number);
     /**
-     * Get the constant for the hasher.
-     * @returns The constants.
+     * Get the constant for the spone.
+     * @name The name of the contant to get.
+     * @returns The constant.
      */
-    getConstants(): {
-        [name: string]: number;
-    };
+    getConstant(name: string): number;
     /**
      * Get the state.
      * @returns The state.
@@ -1968,12 +2064,11 @@ export class Kerl implements ISponge {
      */
     constructor();
     /**
-     * Get the constant for the hasher.
-     * @returns The constants.
+     * Get the constant for the spone.
+     * @name The name of the contant to get.
+     * @returns The constant.
      */
-    getConstants(): {
-        [name: string]: number;
-    };
+    getConstant(name: string): number;
     /**
      * Get the state.
      * @returns The state.
@@ -2008,13 +2103,25 @@ export class Kerl implements ISponge {
  * A business implementation of an error.
  */
 export class BusinessError extends CoreError {
+    /**
+     * Create an instance of BusinessError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
 }
+
+export {};
 
 /**
  * Helper class for signing bundles.
  * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export class BundleHelper {
+    static readonly NUMBER_OF_FRAGMENT_CHUNKS: number;
     /**
      * Is the bundle valid.
      * @param bundle The bundle to check for validity.
@@ -2317,8 +2424,6 @@ export class MultiSigClient {
      */
     prepareTransfer(address: Address, securitySum: number, balance: number, transfers: Transfer[], remainderAddress?: Address): Promise<Bundle>;
 }
-
-export {};
 
 /**
  * Hashed Message Authentication Code using Curl.
