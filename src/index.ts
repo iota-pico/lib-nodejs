@@ -12,3 +12,8 @@ export * from "@iota-pico/pow-js";
 export * from "@iota-pico/pow-nodejs";
 // export * from "@iota-pico/pow-wasm";
 
+import {PAL} from "@iota-pico/pal-nodejs";
+
+(async function (): Promise<void> {
+    await PAL.initialize();
+})();
