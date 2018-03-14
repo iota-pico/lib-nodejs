@@ -22,7 +22,7 @@ install:
   - npm link @iota-pico/core @iota-pico/data
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iotaeco/iota-pico-pal-nodejs.git iotaeco/iota-pal-nodejs
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iotaeco/iota-pico-pal-nodejs.git iotaeco/iota-pico-pal-nodejs
   - cd iotaeco/iota-pico-pal-nodejs
   - npm link @iota-pico/core
   - npm link
