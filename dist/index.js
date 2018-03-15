@@ -14,9 +14,9 @@ __export(require("@iota-pico/pal-nodejs"));
 __export(require("@iota-pico/pow-box"));
 __export(require("@iota-pico/pow-js"));
 __export(require("@iota-pico/pow-nodejs"));
-// export * from "@iota-pico/pow-wasm";
+__export(require("@iota-pico/pow-wasm"));
 const pal_nodejs_1 = require("@iota-pico/pal-nodejs");
 (async function () {
     await pal_nodejs_1.PAL.initialize();
 })();
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBOztHQUVHO0FBQ0gscUNBQWdDO0FBQ2hDLHFDQUFnQztBQUNoQyxvQ0FBK0I7QUFDL0IsdUNBQWtDO0FBQ2xDLHlDQUFvQztBQUNwQywyQ0FBc0M7QUFDdEMsd0NBQW1DO0FBQ25DLHVDQUFrQztBQUNsQywyQ0FBc0M7QUFDdEMsdUNBQXVDO0FBRXZDLHNEQUEwQztBQUUxQyxDQUFDLEtBQUs7SUFDRixNQUFNLGdCQUFHLENBQUMsVUFBVSxFQUFFLENBQUM7QUFDM0IsQ0FBQyxDQUFDLEVBQUUsQ0FBQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBOztHQUVHO0FBQ0gscUNBQWdDO0FBQ2hDLHFDQUFnQztBQUNoQyxvQ0FBK0I7QUFDL0IsdUNBQWtDO0FBQ2xDLHlDQUFvQztBQUNwQywyQ0FBc0M7QUFDdEMsd0NBQW1DO0FBQ25DLHVDQUFrQztBQUNsQywyQ0FBc0M7QUFDdEMseUNBQW9DO0FBRXBDLHNEQUEwQztBQUUxQyxDQUFDLEtBQUs7SUFDRixNQUFNLGdCQUFHLENBQUMsVUFBVSxFQUFFLENBQUM7QUFDM0IsQ0FBQyxDQUFDLEVBQUUsQ0FBQyJ9

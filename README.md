@@ -16,6 +16,7 @@ The IOTA Pico Framework Lib NodeJS is a combined library of all the following co
 * [@iota-pico/pow-box](https://github.com/iotaeco/iota-pico-pow-box) - Proof of Work using TestNet PowBox. (for TestNet)
 * [@iota-pico/pow-js](https://github.com/iotaeco/iota-pico-pow-js) - Proof of Work using JavaScript. (Very Slow - Single Threaded)
 * [@iota-pico/pow-nodejs](https://github.com/iotaeco/iota-pico-pow-nodejs) - Proof of Work using CCurl. (Best Choice - Multi-Threaded)
+* [@iota-pico/pow-wasm](https://github.com/iotaeco/iota-pico-pow-wasm) - Proof of Work using WebAssembly. (Slow - Single-Threaded)
 
 ## Installation
 
@@ -54,6 +55,7 @@ The documentation for each part of the library can be found in it's relevant rep
 * [@iota-pico/pow-box documentation](https://github.com/iotaeco/iota-pico-pow-box/docs/README.md)
 * [@iota-pico/pow-js documentation](https://github.com/iotaeco/iota-pico-pow-js/docs/README.md)
 * [@iota-pico/pow-nodejs documentation](https://github.com/iotaeco/iota-pico-pow-nodejs/docs/README.md)
+* [@iota-pico/pow-wasm documentation](https://github.com/iotaeco/iota-pico-pow-wasm/docs/README.md)
 
 ## Tutorials
 
