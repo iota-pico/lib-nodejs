@@ -156,11 +156,29 @@ export class JsonHelper {
  */
 export class NumberHelper {
     /**
+     * Is the value an integer.
+     * @param value Object to test for its integerness.
+     * @returns True if the object is a integer.
+     */
+    static isInteger(value: any): value is Number;
+    /**
      * Is the value a number.
      * @param value Object to test for its numberyness.
      * @returns True if the object is a number.
      */
-    static isInteger(value: any): value is Number;
+    static isNumber(value: any): value is Number;
+    /**
+     * Is the value a float number formatted as a string, can be used for big numbers that would overflow parseFloat.
+     * @param value The value to check
+     * @return True if the number is formatted correctly.
+     */
+    static isFloatString(value: string): boolean;
+    /**
+     * Is the value a integer number formatted as a string, can be used for big numbers that would overflow parseInt.
+     * @param value The value to check
+     * @return True if the number is formatted correctly.
+     */
+    static isIntegerString(value: string): boolean;
 }
 
 /**
@@ -983,7 +1001,7 @@ export class TryteNumber {
      */
     static readonly LENGTH_9: number;
     /**
-     * An emnpty 9 length tryte number.
+     * An empty 9 length tryte number.
      */
     static readonly EMPTY_9: TryteNumber;
     /**
