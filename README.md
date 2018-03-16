@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/iotaeco/iota-pico-lib-nodejs/master/LICENSE) [![Build Status](https://travis-ci.org/iotaeco/iota-pico-lib-nodejs.svg?branch=master)](https://travis-ci.org/iotaeco/iota-pico-lib-nodejs) 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/iotaeco/iota-pico-lib-nodejs/master/LICENSE) [![Build Status](https://travis-ci.org/iotaeco/iota-pico-lib-nodejs.svg?branch=master)](https://travis-ci.org/iotaeco/iota-pico-lib-nodejs) [![NSP Status](https://nodesecurity.io/orgs/iotaeco/projects/dc13eb8f-0598-4fb4-9f9e-c518d5ce65ea/badge)](https://nodesecurity.io/orgs/iotaeco/projects/dc13eb8f-0598-4fb4-9f9e-c518d5ce65ea)
 
 
 # IOTA Pico Framework Lib for NodeJS
