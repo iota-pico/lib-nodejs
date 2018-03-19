@@ -1862,6 +1862,17 @@ export class CryptoError extends CoreError {
 }
 
 /**
+ * Factory to generate proof of work.
+ */
+export class ProofOfWorkFactory extends FactoryBase<IProofOfWork> {
+    /**
+     * Get the instance of the factory.
+     * @returns The factory instance.
+     */
+    static instance(): FactoryBase<IProofOfWork>;
+}
+
+/**
  * Factory to generate sponges.
  */
 export class SpongeFactory extends FactoryBase<ISponge> {
@@ -2864,5 +2875,43 @@ export interface INodePlatform {
     platform(): string;
     lstat(path: string, callback: (err: NodeJS.ErrnoException, stats: Stats) => void): void;
     loadLibrary(filename: string, functions: any): any;
+}
+
+/**
+ * ProofOfWork implementation using WebAssembly.
+ */
+export class ProofOfWorkWasm implements IProofOfWork {
+    /**
+     * Create a new instance of ProofOfWork.
+     * @param webPlatform Provides platform specific functions, optional mostly used for testing.
+     */
+    constructor(webPlatform?: IWebPlatform);
+    /**
+     * Allow the proof of work to perform any initialization.
+     * Will throw an exception if the implementation is not supported.
+     */
+    initialize(): Promise<void>;
+    /**
+     * Performs single conversion per pow call.
+     * @returns True if pow only does one conversion.
+     */
+    performsSingle(): boolean;
+    /**
+     * Perform a proof of work on the data.
+     * @param trunkTransaction The trunkTransaction to use for the pow.
+     * @param branchTransaction The branchTransaction to use for the pow.
+     * @param trytes The trytes to perform the pow on.
+     * @param minWeightMagnitude The minimum weight magnitude.
+     * @returns The trytes produced by the proof of work.
+     */
+    pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise<Trytes[]>;
+}
+
+/**
+ * IWebPlatform interface.
+ */
+export interface IWebPlatform {
+    webAssemblyType: string;
+    wasmModuleLoader(module: any): void;
 }
 

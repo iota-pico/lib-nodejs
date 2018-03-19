@@ -30,8 +30,14 @@ The library also has a dependency of [big-integer](https://www.npmjs.com/package
 There are two variants of the library
 
 * development - which is not minified and includes source maps in [pkg/iota-pico-lib-nodejs.js](./pkg/iota-pico-lib-nodejs.js)
-
 * production - which is minified and has no  source maps in [pkg/iota-pico-lib-nodejs.min.js](./pkg/iota-pico-lib-nodejs.min.js)
+
+If you don't want all of the proof of work algorithms, there are some alternative smaller packages:
+
+* [pkg/iota-pico-lib-nodejs-none.js](./pkg/iota-pico-lib-nodejs-none.js) - No Proof Of Work algorithms
+* [pkg/iota-pico-lib-nodejs-none.min.js](./pkg/iota-pico-lib-nodejs-none.min.js) - No Proof Of Work algorithms
+* [pkg/iota-pico-lib-nodejs-ccurl.js](./pkg/iota-pico-lib-nodejs-ccurl.js) - Fastest for Platform
+* [pkg/iota-pico-lib-nodejs-ccurl.min.js](./pkg/iota-pico-lib-nodejs-ccurl.min.js) - Fastest for Platform
 
 # TypeScript Definitions
 
@@ -41,22 +47,22 @@ TypeScript definitions can be found in the [pkg/iota-pico-lib-nodejs.d.ts](./pkg
 
 The library is compiled into a CommonJS that can be included directly in the NodeJS. You can see various usage scenarios in the following browser tutorials:
 
-* [Usage Library NodeJS](https://github.com/iotaeco/iota-pico-tutorials/using-library/nodejs/getNodeInfoNodeJS/README.md)
+* [Usage Library NodeJS](https://github.com/iotaeco/iota-pico-tutorials/blob/master/using-library/nodejs/getNodeInfoNodeJS/README.md)
 
 # Documentation
 
 The documentation for each part of the library can be found in it's relevant repository:
 
-* [@iota-pico/core](https://github.com/iotaeco/iota-pico-core/docs/README.md)
-* [@iota-pico/data](https://github.com/iotaeco/iota-pico-data/docs/README.md)
-* [@iota-pico/api](https://github.com/iotaeco/iota-pico-api/docs/README.md)
-* [@iota-pico/crypto](https://github.com/iotaeco/iota-pico-crypto/docs/README.md)
-* [@iota-pico/business](https://github.com/iotaeco/iota-pico-business/docs/README.md)
-* [@iota-pico/pal-nodejs](https://github.com/iotaeco/iota-pico-pal-nodejs/docs/README.md)
-* [@iota-pico/pow-box](https://github.com/iotaeco/iota-pico-pow-box/docs/README.md)
-* [@iota-pico/pow-js](https://github.com/iotaeco/iota-pico-pow-js/docs/README.md)
-* [@iota-pico/pow-nodejs](https://github.com/iotaeco/iota-pico-pow-nodejs/docs/README.md)
-* [@iota-pico/pow-wasm](https://github.com/iotaeco/iota-pico-pow-wasm/docs/README.md)
+* [@iota-pico/core](https://github.com/iotaeco/iota-pico-core/blob/master/docs/README.md)
+* [@iota-pico/data](https://github.com/iotaeco/iota-pico-data/blob/master/docs/README.md)
+* [@iota-pico/api](https://github.com/iotaeco/iota-pico-api/blob/master/docs/README.md)
+* [@iota-pico/crypto](https://github.com/iotaeco/iota-pico-crypto/blob/master/docs/README.md)
+* [@iota-pico/business](https://github.com/iotaeco/iota-pico-business/blob/master/docs/README.md)
+* [@iota-pico/pal-nodejs](https://github.com/iotaeco/iota-pico-pal-nodejs/blob/master/docs/README.md)
+* [@iota-pico/pow-box](https://github.com/iotaeco/iota-pico-pow-box/blob/master/docs/README.md)
+* [@iota-pico/pow-js](https://github.com/iotaeco/iota-pico-pow-js/blob/master/docs/README.md)
+* [@iota-pico/pow-nodejs](https://github.com/iotaeco/iota-pico-pow-nodejs/blob/master/docs/README.md)
+* [@iota-pico/pow-wasm](https://github.com/iotaeco/iota-pico-pow-wasm/blob/master/docs/README.md)
 
 # Tutorials
 
