@@ -7,6 +7,7 @@
 * Fixed lib exported name
 * Fixed package.json main and typings
 * Added nsp check on CI build
+* Improved .d.ts file
 
 ## v0.9.0
 

@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Stats } from "fs";
 import http from "http";
 import https from "https";
@@ -2724,7 +2725,6 @@ export class PAL {
     static initialize(): Promise<void>;
 }
 
-/// <reference types="node" />
 /**
  * Implementation of a node client for use in NodeJS.
  */
@@ -2865,7 +2865,6 @@ export class ProofOfWorkNodeJs implements IProofOfWork {
     pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise<Trytes[]>;
 }
 
-/// <reference types="node" />
 /**
  * INodePlatform interface.
  */

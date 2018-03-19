@@ -34,7 +34,7 @@ export async function buildDts(imports: string[], sourceIndex: string, outputFil
             const lines: string[] = fs.readFileSync(path.join(moduleDistPath, fname)).toString().split("\n");
 
             lines.forEach(line => {
-                if (!line.startsWith("import")) {
+                if (!line.startsWith("import") && !line.startsWith("/// <reference")) {
                     line = line.replace("export declare", "export");
                     finalContent += `${line}\n`;
                 }
@@ -47,6 +47,7 @@ export async function buildDts(imports: string[], sourceIndex: string, outputFil
 
 buildDts(
     [
+        "/// <reference types=\"node\" />",
         "import { Stats } from \"fs\";",
         "import http from \"http\";",
         "import https from \"https\";",

@@ -44,6 +44,7 @@
         "dist": "npm-run-all build pkg"
     },
     "dependencies": {
+        "@types/node": "^9.4.7",
         "big-integer": "^1.6.26",
         "ffi": "^2.2.0"
     },
