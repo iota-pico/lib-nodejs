@@ -25,7 +25,7 @@ if (isProd) {
 module.exports = {
     entry: bootstrapFile,
     output: {
-        path: path.resolve(__dirname, './pkg'),
+        path: pkgFolder,
         filename: "iota-pico-lib-nodejs" + outputLibName + (isProd ? '.min' : '') + '.js',
         libraryTarget: 'commonjs2',
         libraryExport: 'default',
@@ -82,7 +82,7 @@ module.exports = {
     },
     node: {
         __dirname: false,
-        __filename: false,
+        __filename: false
     },
     plugins
 };

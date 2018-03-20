@@ -1969,6 +1969,19 @@ export class BigIntegerHelper {
 }
 
 /**
+ * Helper class for transactions.
+ * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
+ */
+export class TransactionHelper {
+    /**
+     * Create the hash for a transaction.
+     * @param transaction The transaction to generate the hash.
+     * @returns The hash of thr transaction.
+     */
+    static hash(transaction: Transaction): Hash;
+}
+
+/**
  * Represents an interface to proof of work.
  * @interface
  */
@@ -1978,11 +1991,6 @@ export interface IProofOfWork {
      * Will throw an exception if the implementation is not supported.
      */
     initialize(): Promise<void>;
-    /**
-     * Performs single conversion per pow call.
-     * @returns True if pow only does one conversion.
-     */
-    performsSingle(): boolean;
     /**
      * Perform a proof of work on the data.
      * @param trunkTransaction The trunkTransaction to use for the pow.
@@ -2033,6 +2041,42 @@ export interface ISponge {
      * @param length The number of trits to squeeze.
      */
     squeeze(trits: Int8Array, offset: number, length: number): void;
+}
+
+/**
+ * Base class for proof of work.
+ */
+export abstract class ProofOfWorkBase implements IProofOfWork {
+    /**
+     * The maximum timestamp value used in proof of work.
+     */
+    static readonly MAX_TIMESTAMP_VALUE: number;
+    /**
+     * Create an instance of ProofOfWork.
+     * @param timeService Service to get the time for attachments.
+     */
+    constructor(timeService?: ITimeService);
+    /**
+     * Allow the proof of work to perform any initialization.
+     * Will throw an exception if the implementation is not supported.
+     */
+    initialize(): Promise<void>;
+    /**
+     * Perform a proof of work on the data.
+     * @param trunkTransaction The trunkTransaction to use for the pow.
+     * @param branchTransaction The branchTransaction to use for the pow.
+     * @param trytes The trytes to perform the pow on.
+     * @param minWeightMagnitude The minimum weight magnitude.
+     * @returns The trytes produced by the proof of work.
+     */
+    pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise<Trytes[]>;
+    /**
+     * Perform a proof of work on a single item.
+     * @param trytes The trytes to perform the pow on.
+     * @param minWeightMagnitude The minimum weight magnitude.
+     * @returns The trytes produced by the proof of work.
+     */
+    abstract singlePow(trytes: Trytes, minWeightMagnitude: number): Promise<Trytes>;
 }
 
 /**
@@ -2787,6 +2831,7 @@ export class ProofOfWorkBox implements IProofOfWork {
      * Create an instance of ProofOfWork.
      * @param networkClient The network client to communicate through.
      * @param apiKey The API key to access the pow box.
+     * @param pollIntervalMs The polling time to check for completion.
      */
     constructor(networkClient: INetworkClient, apiKey: string, pollIntervalMs?: number);
     /**
@@ -2794,11 +2839,6 @@ export class ProofOfWorkBox implements IProofOfWork {
      * Will throw an exception if the implementation is not supported.
      */
     initialize(): Promise<void>;
-    /**
-     * Performs single conversion per pow call.
-     * @returns True if pow only does one conversion.
-     */
-    performsSingle(): boolean;
     /**
      * Perform a proof of work on the data.
      * @param trunkTransaction The trunkTransaction to use for the pow.
@@ -2813,56 +2853,43 @@ export class ProofOfWorkBox implements IProofOfWork {
 /**
  * ProofOfWork implementation using JavaScript.
  */
-export class ProofOfWorkJs implements IProofOfWork {
+export class ProofOfWorkJs extends ProofOfWorkBase {
     /**
-     * Allow the proof of work to perform any initialization.
-     * Will throw an exception if the implementation is not supported.
+     * Create an instance of ProofOfWork.
+     * @param timeService Service to get the time for attachments.
      */
-    initialize(): Promise<void>;
+    constructor(timeService?: ITimeService);
     /**
-     * Performs single conversion per pow call.
-     * @returns True if pow only does one conversion.
-     */
-    performsSingle(): boolean;
-    /**
-     * Perform a proof of work on the data.
-     * @param trunkTransaction The trunkTransaction to use for the pow.
-     * @param branchTransaction The branchTransaction to use for the pow.
+     * Perform a proof of work on a single item.
      * @param trytes The trytes to perform the pow on.
      * @param minWeightMagnitude The minimum weight magnitude.
      * @returns The trytes produced by the proof of work.
      */
-    pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise<Trytes[]>;
+    singlePow(trytes: Trytes, minWeightMagnitude: number): Promise<Trytes>;
 }
 
 /**
  * ProofOfWork implementation using NodeJS.
  */
-export class ProofOfWorkNodeJs implements IProofOfWork {
+export class ProofOfWorkNodeJs extends ProofOfWorkBase {
     /**
      * Create a new instance of ProofOfWork.
      * @param nodePlatform Provides platform specific functions, optional mostly used for testing.
+     * @param timeService Service to get the time for attachments.
      */
-    constructor(nodePlatform?: INodePlatform);
+    constructor(nodePlatform?: INodePlatform, timeService?: ITimeService);
     /**
      * Allow the proof of work to perform any initialization.
      * Will throw an exception if the implementation is not supported.
      */
     initialize(): Promise<void>;
     /**
-     * Performs single conversion per pow call.
-     * @returns True if pow only does one conversion.
-     */
-    performsSingle(): boolean;
-    /**
-     * Perform a proof of work on the data.
-     * @param trunkTransaction The trunkTransaction to use for the pow.
-     * @param branchTransaction The branchTransaction to use for the pow.
+     * Perform a proof of work on a single item.
      * @param trytes The trytes to perform the pow on.
      * @param minWeightMagnitude The minimum weight magnitude.
      * @returns The trytes produced by the proof of work.
      */
-    pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise<Trytes[]>;
+    singlePow(trytes: Trytes, minWeightMagnitude: number): Promise<Trytes>;
 }
 
 /**
@@ -2879,31 +2906,25 @@ export interface INodePlatform {
 /**
  * ProofOfWork implementation using WebAssembly.
  */
-export class ProofOfWorkWasm implements IProofOfWork {
+export class ProofOfWorkWasm extends ProofOfWorkBase {
     /**
      * Create a new instance of ProofOfWork.
      * @param webPlatform Provides platform specific functions, optional mostly used for testing.
+     * @param timeService Service to get the time for attachments.
      */
-    constructor(webPlatform?: IWebPlatform);
+    constructor(webPlatform?: IWebPlatform, timeService?: ITimeService);
     /**
      * Allow the proof of work to perform any initialization.
      * Will throw an exception if the implementation is not supported.
      */
     initialize(): Promise<void>;
     /**
-     * Performs single conversion per pow call.
-     * @returns True if pow only does one conversion.
-     */
-    performsSingle(): boolean;
-    /**
-     * Perform a proof of work on the data.
-     * @param trunkTransaction The trunkTransaction to use for the pow.
-     * @param branchTransaction The branchTransaction to use for the pow.
+     * Perform a proof of work on a single item.
      * @param trytes The trytes to perform the pow on.
      * @param minWeightMagnitude The minimum weight magnitude.
      * @returns The trytes produced by the proof of work.
      */
-    pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise<Trytes[]>;
+    singlePow(trytes: Trytes, minWeightMagnitude: number): Promise<Trytes>;
 }
 
 /**

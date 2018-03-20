@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.9.2
+
+* Updated for PoW module improvements
+
 ## v0.9.1
 
 * Added smaller builds without all of the proofOfWorkModules - ccurl, none
