@@ -81,6 +81,12 @@ export abstract class FactoryBase<T> {
      */
     exists(name: string): boolean;
     /**
+     * List the types in the factory.
+     * @param name The name of the type to look for.
+     * @returns True if the type exists.
+     */
+    types(): string[];
+    /**
      * Create an instance of an object from the factory.
      * @param name The name of the type to create.
      * @param args Any parameters to pass to the constructor.
@@ -98,6 +104,17 @@ export class NetworkClientFactory extends FactoryBase<INetworkClient> {
      * @returns The factory instance.
      */
     static instance(): FactoryBase<INetworkClient>;
+}
+
+/**
+ * Factory to generate rng service.
+ */
+export class RngServiceFactory extends FactoryBase<IRngService> {
+    /**
+     * Get the instance of the factory.
+     * @returns The factory instance.
+     */
+    static instance(): FactoryBase<IRngService>;
 }
 
 /**
@@ -171,13 +188,13 @@ export class NumberHelper {
     /**
      * Is the value a float number formatted as a string, can be used for big numbers that would overflow parseFloat.
      * @param value The value to check
-     * @return True if the number is formatted correctly.
+     * @returns True if the number is formatted correctly.
      */
     static isFloatString(value: string): boolean;
     /**
      * Is the value a integer number formatted as a string, can be used for big numbers that would overflow parseInt.
      * @param value The value to check
-     * @return True if the number is formatted correctly.
+     * @returns True if the number is formatted correctly.
      */
     static isIntegerString(value: string): boolean;
 }
@@ -355,7 +372,7 @@ export interface INetworkClient {
 export interface INetworkEndPoint {
     /**
      * The protocol to access the endpoint with.
-     * @return The protocol.
+     * @returns The protocol.
      */
     getProtocol(): NetworkProtocol;
     /**
@@ -384,6 +401,19 @@ export interface INetworkEndPoint {
  * Represents the protocols for communicating.
  */
 export type NetworkProtocol = "http" | "https";
+
+/**
+ * Represents a service to perform random number generation.
+ * @interface
+ */
+export interface IRngService {
+    /**
+     * Generate an array of random numbers.
+     * @param length The number of numbers to generate.
+     * @returns Array of random number generators.
+     */
+    generate(length: number): Uint8Array;
+}
 
 /**
  * Represents a class which can provide the time.
@@ -489,7 +519,7 @@ export class NetworkEndPoint implements INetworkEndPoint {
     constructor(protocol: NetworkProtocol, host: string, port: number, rootPath?: string);
     /**
      * The protocol to access the endpoint with.
-     * @return The protocol.
+     * @returns The protocol.
      */
     getProtocol(): NetworkProtocol;
     /**
@@ -714,7 +744,7 @@ export class Input {
      * @param security The address security.
      * @param keyIndex The key index.
      * @param balance The balance of the address.
-     * @return New instance of Input.
+     * @returns New instance of Input.
      */
     static fromParams(address: Address, security: AddressSecurity, keyIndex: number, balance: number): Input;
 }
@@ -872,7 +902,7 @@ export class Transaction {
      * @param attachmentTimestampLowerBound The attachment timestamp lower bound.
      * @param attachmentTimestampUpperBound  The attachment timestamp upper bound.
      * @param nonce The nonce.
-     * @return New instance of transaction.
+     * @returns New instance of transaction.
      */
     static fromParams(signatureMessageFragment: SignatureMessageFragment, address: Address, value: number, obsoleteTag: Tag, timestamp: number, currentIndex: number, lastIndex: number, bundle: Hash, trunkTransaction: Hash, branchTransaction: Hash, tag: Tag, attachmentTimestamp: number, attachmentTimestampLowerBound: number, attachmentTimestampUpperBound: number, nonce: Tag): Transaction;
     /**
@@ -883,7 +913,7 @@ export class Transaction {
     static fromTrytes(trytes: Trytes): Transaction;
     /**
      * Convert the transaction to trytes.
-     * @return The transaction as trytes.
+     * @returns The transaction as trytes.
      */
     toTrytes(): Trytes;
     /**
@@ -919,7 +949,7 @@ export class Transfer {
      * @param value The value.
      * @param messsage The message for the transfer.
      * @param tag The tag.
-     * @return New instance of Transfer.
+     * @returns New instance of Transfer.
      */
     static fromParams(address: Address, value: number, message: Trytes, tag: Tag): Transfer;
 }
@@ -956,7 +986,7 @@ export class Trits {
      * Add two trits together.
      * @param first The first trit.
      * @param second The second trit.
-     * @return New trit which is the addition of the a + b.
+     * @returns New trit which is the addition of the a + b.
      */
     static add(first: Trits, second: Trits): Trits;
     /**
@@ -1842,7 +1872,7 @@ export class Sha3 {
     update(input: ArrayBuffer): void;
     /**
      * Finalize and return the hash for the digest, will also reset the state.
-     * @return Array buffer containing the digest.
+     * @returns Array buffer containing the digest.
      */
     digest(): ArrayBuffer;
 }
@@ -1890,46 +1920,76 @@ export class SpongeFactory extends FactoryBase<ISponge> {
  */
 export class ISS {
     /**
+     * Get the subseed for the seed and index.
+     * @param seed The seed.
+     * @param index The index for the seed.
+     * @param spongeType The sponge type to use for operations.
+     * @returns The subseed.
+     */
+    static subseed(seed: Int8Array, index: number, spongeType?: string): Int8Array;
+    /**
      * Create the key for the seed.
      * @param seed The seed to create the key for.
      * @param index The index to use for the seed.
      * @param length The security level to create the key.
+     * @param spongeType The sponge type to use for operations.
      * @returns the key.
      */
-    static key(seed: Hash, index: number, security: AddressSecurity): Int8Array;
+    static key(seed: Hash, index: number, security: AddressSecurity, spongeType?: string): Int8Array;
     /**
      * Create the digests for the given subseed.
      * @param subseed To create the digests for.
+     * @param spongeType The sponge type to use for operations.
      * @returns The digests.
      */
-    static digests(subseed: Int8Array): Int8Array;
+    static digests(subseed: Int8Array, spongeType?: string): Int8Array;
     /**
      * Create the address for the digests.
      * @param digests The digests to create the address for.
+     * @param spongeType The sponge type to use for operations.
      * @returns the address trits.
      */
-    static address(digests: Int8Array): Int8Array;
+    static address(digests: Int8Array, spongeType?: string): Int8Array;
     /**
      * Create digest of the normalized bundle fragment.
      * @param normalizedBundleFragment The fragment to create digest.
      * @param signatureMessageFragment The trits for signature message fragment.
+     * @param spongeType The sponge type to use for operations.
      * @returns The digest of the bundle and signature message fragment.
      */
-    static digest(normalizedBundleFragment: Int8Array, signatureMessageFragment: Int8Array): Int8Array;
+    static digest(normalizedBundleFragment: Int8Array, signatureMessageFragment: Int8Array, spongeType?: string): Int8Array;
+    /**
+     * Get the digest for the subseed.
+     * @param subseed The subseed to get the digest for.
+     * @param security The security level.
+     * @param spongeType The sponge type to use for operations.
+     * @returns The digest.
+     */
+    static subseedToDigest(subseed: Int8Array, security: AddressSecurity, spongeType?: string): Int8Array;
     /**
      * Create a normalized bundle.
      * @param bundleHash The hash of the bundle.
+     * @param spongeType The sponge type to use for operations.
      * @returns the normalized bundle.
      */
-    static normalizedBundle(bundleHash: Hash): Int8Array;
+    static normalizedBundle(bundleHash: Hash, spongeType?: string): Int8Array;
     /**
      * Validate the signature fragments from the address.
      * @param expectedAddress The address.
      * @param signatureMessageFragments The signature message fragments.
      * @param bundleHash The hash for the bundle.
+     * @param spongeType The sponge type to use for operations.
      * @returns True if the signature message fragment are signed by the expected address.
      */
-    static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash): boolean;
+    static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash, spongeType?: string): boolean;
+    /**
+     * Create a signed signature message fragment.
+     * @param normalizedBundleFragment The fragment to sign.
+     * @param keyFragment The key fragment to sign with.
+     * @param spongeType The sponge type to use for operations.
+     * @returns The signed fragment.
+     */
+    static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array, spongeType?: string): Int8Array;
 }
 
 /**
@@ -2210,12 +2270,42 @@ export class BundleHelper {
      * @returns True is the signatures are valid.
      */
     static validateSignatures(signedBundle: Bundle, inputAddress: Address): boolean;
+    /**
+     * Prepare a bundle.
+     * @param timeService To use for stamping the transactions.
+     * @param transfers The transfers to add to the bundle.
+     */
     static prepareBundle(timeService: ITimeService, transfers: Transfer[]): {
         bundle: Bundle;
         totalValue: number;
         signatureMessageFragments: SignatureMessageFragment[];
         lastTag: Tag;
     };
+    /**
+     * Sign the input of the bundle.
+     * @param seed The seed to use for signing.
+     * @param bundle The bundle to sign.
+     * @param transferOptions Additional transfer options.
+     * @param signatureMessageFragments The signature message fragemtns.
+     * @param inputs The input for use.
+     * @param addedHMAC Has an HMAC been added.
+     */
+    static signInputs(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, signatureMessageFragments: SignatureMessageFragment[], inputs: Input[], addedHMAC: boolean): void;
+    /**
+     * Sign the trsnactions
+     * @param bundle The bundle of transactions to sign.
+     * @param index The index to start.
+     * @param firstUnsignedIndex The first unsigned index.
+     * @param keyTrits The key trits.
+     * @param addressTrytes The address trytes.
+     * @param security The security level.
+     */
+    static signTransactions(bundle: Bundle, index: number, firstUnsignedIndex: number, keyTrits: Int8Array, addressTrytes: string, security: AddressSecurity): void;
+    /**
+     * Finalize a bundle.
+     * @param bundle The bundle to finalize.
+     */
+    static finalizeBundle(bundle: Bundle): void;
 }
 
 /**
@@ -2699,7 +2789,6 @@ export class TransactionClient implements ITransactionClient {
     rebroadcastBundle(transactionHash: Hash): Promise<Bundle>;
     /**
      * Get transaction objects by fist performing a findTransactions call.
-     * @param addresses The addresses to get the transaction objects for.
      * @param bundles Bundles to lookup transactions for.
      * @param addresses Addresses to lookup transactions for.
      * @param tags Tags to lookup transactions for.
@@ -2821,6 +2910,18 @@ export class NetworkClient implements INetworkClient {
     postJson<T, U>(data: T, additionalPath?: string, additionalHeaders?: {
         [header: string]: string;
     }): Promise<U>;
+}
+
+/**
+ * Implementation of random number generation service.
+ */
+export class RngService implements IRngService {
+    /**
+     * Generate an array of random numbers.
+     * @param length The number of numbers to generate.
+     * @returns Array of random number generators.
+     */
+    generate(length: number): Uint8Array;
 }
 
 /**
