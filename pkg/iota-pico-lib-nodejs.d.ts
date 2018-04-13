@@ -59,6 +59,21 @@ export class NetworkError extends CoreError {
 }
 
 /**
+ * A platform implementation of an error.
+ */
+export class PlatformError extends CoreError {
+    /**
+     * Create an instance of PlatformError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
+}
+
+/**
  * Factory to generate types.
  * @typeparam T The generic type for the object types in the factory.
  */
@@ -104,6 +119,17 @@ export class NetworkClientFactory extends FactoryBase<INetworkClient> {
      * @returns The factory instance.
      */
     static instance(): FactoryBase<INetworkClient>;
+}
+
+/**
+ * Factory to generate rng service.
+ */
+export class PlatformCryptoFactory extends FactoryBase<IPlatformCrypto> {
+    /**
+     * Get the instance of the factory.
+     * @returns The factory instance.
+     */
+    static instance(): FactoryBase<IPlatformCrypto>;
 }
 
 /**
@@ -398,9 +424,36 @@ export interface INetworkEndPoint {
 }
 
 /**
- * Represents the protocols for communicating.
+ * Represents an object that can perform crypto operations.
+ * @interface
  */
-export type NetworkProtocol = "http" | "https";
+export interface IPlatformCrypto {
+    /**
+     * Encrypt the given data.
+     * @param data The data to encrypt.
+     * @returns The encrypted data.
+     */
+    encrypt(data: string): string;
+    /**
+     * Decrypt the given data.
+     * @param data The data to decrypt.
+     * @returns The decrypted data.
+     */
+    decrypt(data: string): string;
+    /**
+     * Sign the given data.
+     * @param data The data to sign.
+     * @returns The signature.
+     */
+    sign(data: string): string;
+    /**
+     * Verify the given data with the signature.
+     * @param data The data to verify.
+     * @param signature The signature to verify againt the data.
+     * @returns True if the verification is successful.
+     */
+    verify(data: string, signature: string): boolean;
+}
 
 /**
  * Represents a service to perform random number generation.
@@ -426,6 +479,11 @@ export interface ITimeService {
      */
     msSinceEpoch(): number;
 }
+
+/**
+ * Represents the protocols for communicating.
+ */
+export type NetworkProtocol = "http" | "https";
 
 /**
  * Implementation of ILogger which sends to the this._loggingObject.
@@ -2849,6 +2907,266 @@ export type TransferOptions = {
 };
 
 /**
+ * Represents a config provider which uses google storage.
+ */
+export class GoogleStorageConfigProvider implements IDataTableConfigProvider {
+    /**
+     * Create a new instance of the GoogleStorageConfigProvider.
+     * @param bucketName The name of the bucket object.
+     * @param configName The name of the configuration object.
+     * @param serviceAccountKey The key to acccess the google api.
+     * @param logger Logger to send info to.
+     */
+    constructor(bucketName: string, configName: string, serviceAccountKey?: IGoogleServiceAccountKey, logger?: ILogger);
+    /**
+     * Load the configuration for the data table.
+     * @returns The configuration.
+     */
+    load(): Promise<IDataTableConfig>;
+    /**
+     * Save the configuration for the data table.
+     * @param config The configuration to set.
+     */
+    save(config: IDataTableConfig): Promise<void>;
+    private getToken(scope);
+}
+
+/**
+ * A storage implementation of an error.
+ */
+export class StorageError extends CoreError {
+    /**
+     * Create an instance of StorageError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
+}
+
+/**
+ * Represents a table for storing data.
+ */
+export class DataTable<T> implements IDataTable<T> {
+    /**
+     * Create a new instance of the DataTable.
+     * @param storageClient A storage client to perform storage operations.
+     * @param configProvider A provider to get the configuration for the table.
+     * @param logger Logger to send storage info to.
+     */
+    constructor(storageClient: IStorageClient, configProvider: IDataTableConfigProvider, logger?: ILogger);
+    /**
+     * Get the index for the table.
+     * @returns The table index.
+     */
+    index(): Promise<DataTableIndex>;
+    /**
+     * Store an item of data in the table.
+     * @param data The data to store.
+     * @param tag The tag to store with the item.
+     * @returns The id of the stored item.
+     */
+    store(data: T, tag?: Tag): Promise<Hash>;
+    /**
+     * Retrieve all the data stored in the table.
+     * @param ids Ids of all the items to retrieve, if empty will retrieve all items from index.
+     * @returns The items stored in the table.
+     */
+    retrieve(ids?: Hash[]): Promise<T[]>;
+    /**
+     * Remove an item of data from the table.
+     * @param id The id of the item to remove.
+     */
+    remove(id: Hash): Promise<void>;
+}
+
+/**
+ * Represents a table for storing data with signing.
+ */
+export class SignedDataTable<T> implements IDataTable<T> {
+    /**
+     * Create a new instance of the DataTable.
+     * @param storageClient A storage client to perform storage operations.
+     * @param configProvider A provider to get the configuration for the table.
+     * @param platformCrypto The object to use for platform crypto functions.
+     * @param logger Logger to send storage info to.
+     */
+    constructor(storageClient: IStorageClient, configProvider: IDataTableConfigProvider, platformCrypto: IPlatformCrypto, logger?: ILogger);
+    /**
+     * Get the index for the table.
+     * @returns The table index.
+     */
+    index(): Promise<DataTableIndex>;
+    /**
+     * Store an item of data in the table.
+     * @param data The data to store.
+     * @param tag The tag to store with the item.
+     * @returns The id of the stored item.
+     */
+    store(data: T, tag?: Tag): Promise<Hash>;
+    /**
+     * Retrieve all the data stored in the table.
+     * @param ids Ids of all the items to retrieve, if empty will retrieve all items from index.
+     * @returns The items stored in the table.
+     */
+    retrieve(ids?: Hash[]): Promise<T[]>;
+    /**
+     * Remove an item of data from the table.
+     * @param id The id of the item to remove.
+     */
+    remove(id: Hash): Promise<void>;
+}
+
+/**
+ * Represents a table index for storing data.
+ */
+export type DataTableIndex = string[];
+
+/**
+ * Represents a table for storing data.
+ * @interface
+ */
+export interface IDataTable<T> {
+    /**
+     * Get the index address for the table.
+     * @returns The table index.
+     */
+    index(): Promise<DataTableIndex>;
+    /**
+     * Store an item of data in the table.
+     * @param data The data to store.
+     * @param tag The tag to store with the item.
+     * @returns The id of the stored item.
+     */
+    store(data: T, tag?: Tag): Promise<Hash>;
+    /**
+     * Retrieve all the data stored in the table.
+     * @param ids Ids of all the items to retrieve, if empty will retrieve all items from index.
+     * @returns The items stored in the table.
+     */
+    retrieve(ids?: Hash[]): Promise<T[]>;
+    /**
+     * Remove an item of data from the table.
+     * @param id The id of the item to remove.
+     */
+    remove(id: Hash): Promise<void>;
+}
+
+/**
+ * Represents the configuration required by data table.
+ * @interface
+ */
+export interface IDataTableConfig {
+    indexBundleHash?: string;
+    storageAddress: string;
+}
+
+/**
+ * Represents a class that can get/set data table configuration.
+ * @interface
+ */
+export interface IDataTableConfigProvider {
+    /**
+     * Load the configuration for the data table.
+     * @returns The configuration.
+     */
+    load(): Promise<IDataTableConfig>;
+    /**
+     * Save the configuration for the data table.
+     * @param config The configuration to set.
+     */
+    save(config: IDataTableConfig): Promise<void>;
+}
+
+/**
+ * Represents the configuration for google service account.
+ */
+export interface IGoogleServiceAccountKey {
+    "type": string;
+    "project_id": string;
+    "private_key_id": string;
+    "private_key": string;
+    "client_email": string;
+    "client_id": string;
+    "auth_uri": string;
+    "token_uri": string;
+    "auth_provider_x509_cert_url": string;
+    "client_x509_cert_url": string;
+}
+
+/**
+ * Represents an item of data stored with a signature.
+ * @interface
+ */
+export interface ISignedItem<T> {
+    data: T;
+    timestamp: number;
+    signature: string;
+}
+
+/**
+ * Represents a client for performing storage operations.
+ * @interface
+ */
+export interface IStorageClient {
+    /**
+     * Save an item of data on the address.
+     * @param address The address to store the item.
+     * @param data The data to store.
+     * @param tag Tag to label the data with.
+     * @returns The id of the item saved.
+     */
+    save(address: Address, data: Trytes, tag?: Tag): Promise<Hash>;
+    /**
+     * Load the data stored with the given bundle hash ids.
+     * @param ids The ids of the items to load.
+     * @returns The items stored at the hashes.
+     */
+    load(ids: Hash[]): Promise<StorageItem[]>;
+}
+
+/**
+ * Default implementation of the StorageClient.
+ */
+export class StorageClient implements IStorageClient {
+    /**
+     * Create a new instance of the StorageClient.
+     * @param transactionClient A transaction client to perform tangle operations.
+     * @param logger Logger to send storage info to.
+     */
+    constructor(transactionClient: ITransactionClient, logger?: ILogger);
+    /**
+     * Save an item of data on the address.
+     * @param address The address to store the item.
+     * @param data The data to store.
+     * @param tag Tag to label the data with.
+     * @returns The id of the item saved.
+     */
+    save(address: Address, data: Trytes, tag?: Tag): Promise<Hash>;
+    /**
+     * Load the data stored with the given bundle hash ids.
+     * @param ids The ids of the items to load.
+     * @returns The items stored at the hashes.
+     */
+    load(ids: Hash[]): Promise<StorageItem[]>;
+}
+
+/**
+ * Class to maintain an item stored on the tangle.
+ */
+export class StorageItem {
+    id: Hash;
+    data: Trytes;
+    tag: Tag;
+    attachmentTimestamp: number;
+    bundleHash: Hash;
+    transactionHashes: Hash[];
+    constructor(id: Hash, data: Trytes, tag: Tag, attachmentTimestamp: number, bundleHash: Hash, transactionHashes: Hash[]);
+}
+
+/**
  * Platform abstraction layer for NodeJS.
  */
 export class PAL {
@@ -2856,6 +3174,43 @@ export class PAL {
      * Perform any initialization for the PAL.
      */
     static initialize(): Promise<void>;
+}
+
+/**
+ * Implementation of a platform crypto for use in NodeJS.
+ */
+export class PlatformCrypto implements IPlatformCrypto {
+    /**
+     * Create a new instance of PlatformCrypto.
+     * @param publicKey The key to use for decoding data.
+     * @param privateKey The key to use for encoding data.
+     */
+    constructor(publicKey: string, privateKey?: string);
+    /**
+     * Encrypt the given data.
+     * @param data The data to encrypt.
+     * @returns The encrypted data.
+     */
+    encrypt(data: string): string;
+    /**
+     * Decrypt the given data.
+     * @param data The data to decrypt.
+     * @returns The decrypted data.
+     */
+    decrypt(data: string): string;
+    /**
+     * Sign the given data.
+     * @param data The data to sign.
+     * @returns The signature.
+     */
+    sign(data: string): string;
+    /**
+     * Verify the given data.
+     * @param data The data to verify.
+     * @param signature The signature to verify againt the data.
+     * @returns True if the verification is successful.
+     */
+    verify(data: string, signature: string): boolean;
 }
 
 /**
