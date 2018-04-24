@@ -2,7 +2,7 @@
     "name": "@iota-pico/lib-nodejs",
     "version": "0.9.3",
     "description": "IOTA Pico Framework Library for NodeJS",
-    "main": "dist/index.js",
+    "main": "pkg/iota-pico-lib-nodejs.js",
     "typings": "pkg/iota-pico-lib-nodejs.d.ts",
     "module": "dist/index-all.js",
     "keywords": [
