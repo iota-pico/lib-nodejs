@@ -2907,6 +2907,30 @@ export type TransferOptions = {
 };
 
 /**
+ * Represents a data table config provider which uses and IConfigProvider.
+ */
+export class DataTableConfigProvider implements IDataTableConfigProvider {
+    /**
+     * Create a new instance of the DataTableConfigProvider.
+     * @param configProvider The config provider to use.
+     * @param logger Logger to send info to.
+     */
+    constructor(configProvider: IConfigProvider, logger?: ILogger);
+    /**
+     * Load the configuration for the data table.
+     * @param tableName The table to load the configuration for.
+     * @returns The configuration.
+     */
+    load(tableName: string): Promise<IDataTableConfig>;
+    /**
+     * Save the configuration for the data table.
+     * @param tableName The table to save the configuration for.
+     * @param config The configuration to set.
+     */
+    save(tableName: string, config: IDataTableConfig): Promise<void>;
+}
+
+/**
  * Represents a config provider which uses google storage.
  */
 export class GoogleStorageConfigProvider implements IConfigProvider {
@@ -2928,21 +2952,6 @@ export class GoogleStorageConfigProvider implements IConfigProvider {
      * @param config The configuration to set.
      */
     save<T>(config: T): Promise<void>;
-}
-
-/**
- * A storage implementation of an error.
- */
-export class StorageError extends CoreError {
-    /**
-     * Create an instance of StorageError.
-     * @param message The message for the error.
-     * @param additional Additional details about the error.
-     * @param innerError Add information from inner error if there was one.
-     */
-    constructor(message: string, additional?: {
-        [id: string]: any;
-    }, innerError?: Error);
 }
 
 /**
@@ -3037,9 +3046,41 @@ export class SignedDataTable<T> implements IDataTable<T> {
 }
 
 /**
+ * A storage implementation of an error.
+ */
+export class StorageError extends CoreError {
+    /**
+     * Create an instance of StorageError.
+     * @param message The message for the error.
+     * @param additional Additional details about the error.
+     * @param innerError Add information from inner error if there was one.
+     */
+    constructor(message: string, additional?: {
+        [id: string]: any;
+    }, innerError?: Error);
+}
+
+/**
  * Represents a table index for storing data.
  */
 export type DataTableIndex = string[];
+
+/**
+ * Represents a class that can get/set configuration.
+ * @interface
+ */
+export interface IConfigProvider {
+    /**
+     * Load the configuration.
+     * @returns The configuration.
+     */
+    load<T>(): Promise<T>;
+    /**
+     * Save the configuration.
+     * @param config The configuration to set.
+     */
+    save<T>(config: T): Promise<void>;
+}
 
 /**
  * Represents a table for storing data.
@@ -3087,6 +3128,14 @@ export interface IDataTableConfig {
     indexBundleHash?: string;
     indexAddress: string;
     dataAddress: string;
+}
+
+/**
+ * Represents the configuration required by data tables.
+ * @interface
+ */
+export interface IDataTableConfigCollection {
+    [tableName: string]: IDataTableConfig;
 }
 
 /**

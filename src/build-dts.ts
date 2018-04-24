@@ -19,6 +19,8 @@ export async function buildDts(imports: string[], sourceIndex: string, outputFil
         sources.push(/export \* from \"(.*)\";/g.exec(sourceExports[i])[1]);
     }
 
+    console.log("Sources", sources);
+
     for (let i: number = 0; i < sources.length; i++) {
         const moduleDistPath: string = path.join("./node_modules/", sources[i], "dist");
         console.log(`Merging ${moduleDistPath}`);
