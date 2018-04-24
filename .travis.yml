@@ -57,7 +57,7 @@ install:
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
   - cd ../lib-nodejs
-  - npm link @iota-pico/core @iota-pico/data @iota-pico/api @iota-pico/crypto @iota-pico/business @iota-pico/pal-nodejs @iota-pico/pow-js @iota-pico/pow-box @iota-pico/pow-wasm @iota-pico/pow-nodejs
+  - npm link @iota-pico/core @iota-pico/data @iota-pico/api @iota-pico/crypto @iota-pico/business @iota-pico/storage @iota-pico/pal-nodejs @iota-pico/pow-js @iota-pico/pow-box @iota-pico/pow-wasm @iota-pico/pow-nodejs
   - npm install
 script:
   - npm run dist || travis_terminate 1
