@@ -2909,7 +2909,7 @@ export type TransferOptions = {
 /**
  * Represents a config provider which uses google storage.
  */
-export class GoogleStorageConfigProvider implements IDataTableConfigProvider {
+export class GoogleStorageConfigProvider implements IConfigProvider {
     /**
      * Create a new instance of the GoogleStorageConfigProvider.
      * @param bucketName The name of the bucket object.
@@ -2922,13 +2922,12 @@ export class GoogleStorageConfigProvider implements IDataTableConfigProvider {
      * Load the configuration for the data table.
      * @returns The configuration.
      */
-    load(): Promise<IDataTableConfig>;
+    load<T>(): Promise<T>;
     /**
      * Save the configuration for the data table.
      * @param config The configuration to set.
      */
-    save(config: IDataTableConfig): Promise<void>;
-    private getToken(scope);
+    save<T>(config: T): Promise<void>;
 }
 
 /**
@@ -2954,9 +2953,10 @@ export class DataTable<T> implements IDataTable<T> {
      * Create a new instance of the DataTable.
      * @param storageClient A storage client to perform storage operations.
      * @param configProvider A provider to get the configuration for the table.
+     * @param tableName The name of the table.
      * @param logger Logger to send storage info to.
      */
-    constructor(storageClient: IStorageClient, configProvider: IDataTableConfigProvider, logger?: ILogger);
+    constructor(storageClient: IStorageClient, configProvider: IDataTableConfigProvider, tableName: string, logger?: ILogger);
     /**
      * Get the index for the table.
      * @returns The table index.
@@ -2969,6 +2969,14 @@ export class DataTable<T> implements IDataTable<T> {
      * @returns The id of the stored item.
      */
     store(data: T, tag?: Tag): Promise<Hash>;
+    /**
+     * Update an item of data in the table.
+     * @param originalId The id of the item to update.
+     * @param data The data to update.
+     * @param tag The tag to store with the item.
+     * @returns The id of the updated item.
+     */
+    update(originalId: Hash, data: T, tag?: Tag): Promise<Hash>;
     /**
      * Retrieve all the data stored in the table.
      * @param ids Ids of all the items to retrieve, if empty will retrieve all items from index.
@@ -2990,10 +2998,11 @@ export class SignedDataTable<T> implements IDataTable<T> {
      * Create a new instance of the DataTable.
      * @param storageClient A storage client to perform storage operations.
      * @param configProvider A provider to get the configuration for the table.
+     * @param tableName The name of the table.
      * @param platformCrypto The object to use for platform crypto functions.
      * @param logger Logger to send storage info to.
      */
-    constructor(storageClient: IStorageClient, configProvider: IDataTableConfigProvider, platformCrypto: IPlatformCrypto, logger?: ILogger);
+    constructor(storageClient: IStorageClient, configProvider: IDataTableConfigProvider, tableName: string, platformCrypto: IPlatformCrypto, logger?: ILogger);
     /**
      * Get the index for the table.
      * @returns The table index.
@@ -3006,6 +3015,14 @@ export class SignedDataTable<T> implements IDataTable<T> {
      * @returns The id of the stored item.
      */
     store(data: T, tag?: Tag): Promise<Hash>;
+    /**
+     * Update an item of data in the table.
+     * @param originalId The id of the item to update.
+     * @param data The data to update.
+     * @param tag The tag to store with the item.
+     * @returns The id of the updated item.
+     */
+    update(originalId: Hash, data: T, tag?: Tag): Promise<Hash>;
     /**
      * Retrieve all the data stored in the table.
      * @param ids Ids of all the items to retrieve, if empty will retrieve all items from index.
@@ -3042,6 +3059,14 @@ export interface IDataTable<T> {
      */
     store(data: T, tag?: Tag): Promise<Hash>;
     /**
+     * Update an item of data in the table.
+     * @param originalId The id of the item to update.
+     * @param data The data to update.
+     * @param tag The tag to store with the item.
+     * @returns The id of the updated item.
+     */
+    update(originalId: Hash, data: T, tag?: Tag): Promise<Hash>;
+    /**
      * Retrieve all the data stored in the table.
      * @param ids Ids of all the items to retrieve, if empty will retrieve all items from index.
      * @returns The items stored in the table.
@@ -3060,7 +3085,8 @@ export interface IDataTable<T> {
  */
 export interface IDataTableConfig {
     indexBundleHash?: string;
-    storageAddress: string;
+    indexAddress: string;
+    dataAddress: string;
 }
 
 /**
@@ -3070,14 +3096,16 @@ export interface IDataTableConfig {
 export interface IDataTableConfigProvider {
     /**
      * Load the configuration for the data table.
+     * @param tableName The table to load the configuration for.
      * @returns The configuration.
      */
-    load(): Promise<IDataTableConfig>;
+    load(tableName: string): Promise<IDataTableConfig>;
     /**
      * Save the configuration for the data table.
+     * @param tableName The table to save the configuration for.
      * @param config The configuration to set.
      */
-    save(config: IDataTableConfig): Promise<void>;
+    save(tableName: string, config: IDataTableConfig): Promise<void>;
 }
 
 /**
@@ -3118,7 +3146,7 @@ export interface IStorageClient {
      * @param tag Tag to label the data with.
      * @returns The id of the item saved.
      */
-    save(address: Address, data: Trytes, tag?: Tag): Promise<Hash>;
+    save(address: Address, data: Trytes, tag?: Tag): Promise<StorageItem>;
     /**
      * Load the data stored with the given bundle hash ids.
      * @param ids The ids of the items to load.
@@ -3144,7 +3172,7 @@ export class StorageClient implements IStorageClient {
      * @param tag Tag to label the data with.
      * @returns The id of the item saved.
      */
-    save(address: Address, data: Trytes, tag?: Tag): Promise<Hash>;
+    save(address: Address, data: Trytes, tag?: Tag): Promise<StorageItem>;
     /**
      * Load the data stored with the given bundle hash ids.
      * @param ids The ids of the items to load.

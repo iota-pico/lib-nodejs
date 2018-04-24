@@ -34,7 +34,8 @@ module.exports = {
             amd: "@iota-pico/lib-nodejs",
             commonjs: "@iota-pico/lib-nodejs"
         },
-        umdNamedDefine: true
+        umdNamedDefine: true,
+        globalObject: 'typeof self !== \'undefined\' ? self : this'
     },
     target: "node",
     externals: {
@@ -46,7 +47,7 @@ module.exports = {
             "root": "bigInt"
         }
     },
-    // mode: isProd ? "production": "development",
+    mode: isProd ? "production": "development",
     devtool: isProd ? undefined : "inline-source-map",
     module: {
         rules: [
