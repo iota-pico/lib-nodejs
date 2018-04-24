@@ -3,55 +3,55 @@ node_js:
   - "8"
 install:
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-core.git iota-pico/iota-pico-core
-  - cd iota-pico-core
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/core.git iota-pico/core
+  - cd iota-pico/core
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-api.git iota-pico/iota-pico-api
-  - cd iota-pico-api
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/api.git iota-pico/api
+  - cd iota-pico/api
   - npm link @iota-pico/core
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-data.git iota-pico/iota-pico-data
-  - cd iota-pico-data
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/data.git iota-pico/data
+  - cd iota-pico/data
   - npm link @iota-pico/core
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-crypto.git iota-pico/iota-pico-crypto
-  - cd iota-pico-crypto
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/crypto.git iota-pico/crypto
+  - cd iota-pico/crypto
   - npm link @iota-pico/core @iota-pico/data
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-business.git iota-pico/iota-pico-business
-  - cd iota-pico-business
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/business.git iota-pico/business
+  - cd iota-pico/business
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto @iota-pico/api
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-pal-nodejs.git iota-pico/iota-pico-pal-nodejs
-  - cd iota-pico-pal-nodejs
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pal-nodejs.git iota-pico/pal-nodejs
+  - cd iota-pico/pal-nodejs
   - npm link @iota-pico/core
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-pow-js.git iota-pico/iota-pico-pow-js
-  - cd iota-pico-pow-js
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pow-js.git iota-pico/pow-js
+  - cd iota-pico/pow-js
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-pow-box.git iota-pico/iota-pico-pow-box
-  - cd iota-pico-pow-box
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pow-box.git iota-pico/pow-box
+  - cd iota-pico/pow-box
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-pow-wasm.git iota-pico/iota-pico-pow-wasm
-  - cd iota-pico-pow-wasm
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pow-wasm.git iota-pico/pow-wasm
+  - cd iota-pico/pow-wasm
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
   - cd ../../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/iota-pico-pow-nodejs.git iota-pico/iota-pico-pow-nodejs
-  - cd iota-pico-pow-nodejs
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pow-nodejs.git iota-pico/pow-nodejs
+  - cd iota-pico/pow-nodejs
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
-  - cd ../iota-pico-lib-nodejs
+  - cd ../lib-nodejs
   - npm link @iota-pico/core @iota-pico/data @iota-pico/api @iota-pico/crypto @iota-pico/business @iota-pico/pal-nodejs @iota-pico/pow-js @iota-pico/pow-box @iota-pico/pow-wasm @iota-pico/pow-nodejs
   - npm install
 script:
