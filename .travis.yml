@@ -56,4 +56,4 @@ install:
   - npm install
 script:
   - npm run dist || travis_terminate 1
-  - npm run security || travis_terminate 1
+#  - npm run security || travis_terminate 1
