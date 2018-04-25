@@ -2,7 +2,8 @@
 
 ## v0.9.3
 
-* Fix Release
+* Repo rename
+* Updated webpack major ver
 
 ## v0.9.2
 
