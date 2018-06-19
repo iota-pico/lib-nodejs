@@ -1,6 +1,6 @@
 {
     "name": "@iota-pico/lib-nodejs",
-    "version": "0.9.5",
+    "version": "0.9.6",
     "description": "IOTA Pico Framework Library for NodeJS",
     "main": "pkg/iota-pico-lib-nodejs.js",
     "typings": "pkg/iota-pico-lib-nodejs.d.ts",
@@ -45,7 +45,7 @@
         "dist": "npm-run-all build pkg"
     },
     "dependencies": {
-        "@types/node": "^10.1.1",
+        "@types/node": "^10.3.4",
         "big-integer": "^1.6.28",
         "ffi": "^2.2.0"
     },
@@ -54,27 +54,27 @@
         "@babel/plugin-transform-runtime": "^7.0.0-beta.40",
         "@babel/preset-env": "^7.0.0-beta.40",
         "@babel/runtime": "^7.0.0-beta.40",
-        "@iota-pico/api": "^0.9.5",
-        "@iota-pico/business": "^0.9.5",
-        "@iota-pico/core": "^0.9.5",
-        "@iota-pico/crypto": "^0.9.5",
-        "@iota-pico/data": "^0.9.5",
-        "@iota-pico/pal-nodejs": "^0.9.5",
-        "@iota-pico/pow-box": "^0.9.5",
-        "@iota-pico/pow-js": "^0.9.5",
-        "@iota-pico/pow-nodejs": "^0.9.5",
-        "@iota-pico/pow-wasm": "^0.9.5",
-        "@iota-pico/storage": "^0.9.5",
+        "@iota-pico/api": "^0.9.6",
+        "@iota-pico/business": "^0.9.6",
+        "@iota-pico/core": "^0.9.6",
+        "@iota-pico/crypto": "^0.9.6",
+        "@iota-pico/data": "^0.9.6",
+        "@iota-pico/pal-nodejs": "^0.9.6",
+        "@iota-pico/pow-box": "^0.9.6",
+        "@iota-pico/pow-js": "^0.9.6",
+        "@iota-pico/pow-nodejs": "^0.9.6",
+        "@iota-pico/pow-wasm": "^0.9.6",
+        "@iota-pico/storage": "^0.9.6",
         "babel-loader": "^8.0.0-beta.0",
         "babel-plugin-transform-builtin-extend": "^1.1.2",
-        "cross-env": "^5.1.5",
+        "cross-env": "^5.2.0",
         "npm-run-all": "^4.1.3",
         "nsp": "^3.2.1",
         "rimraf": "^2.6.2",
         "source-map-support": "^0.5.6",
-        "typescript": "^2.8.3",
+        "typescript": "^2.9.2",
         "uglifyjs-webpack-plugin": "^1.2.5",
         "webpack": "^4.8.3",
-        "webpack-cli": "^2.1.3"
+        "webpack-cli": "^3.0.8"
     }
 }
