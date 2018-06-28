@@ -47,7 +47,7 @@
     "dependencies": {
         "@types/node": "^10.3.6",
         "big-integer": "^1.6.32",
-        "ffi": "^2.2.0"
+        "ffi": "github:node-ffi/node-ffi"
     },
     "devDependencies": {
         "@babel/core": "^7.0.0-beta.40",

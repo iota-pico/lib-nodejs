@@ -3,6 +3,7 @@
 ## v0.9.7
 
 * Reduced umd module size with externals
+* Switched ffi module to github source not from npm package
 
 ## v0.9.6
 
