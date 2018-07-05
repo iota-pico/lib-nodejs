@@ -29,19 +29,19 @@ The library also has a dependency of [big-integer](https://www.npmjs.com/package
 
 There are two variants of the library
 
-* development - which is not minified and includes source maps in [pkg/iota-pico-lib-nodejs.js](./pkg/iota-pico-lib-nodejs.js)
-* production - which is minified and has no  source maps in [pkg/iota-pico-lib-nodejs.min.js](./pkg/iota-pico-lib-nodejs.min.js)
+* development - which is not minified and includes source maps in [pkg/iota-pico-lib-nodejs.js](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs.js)
+* production - which is minified and has no  source maps in [pkg/iota-pico-lib-nodejs.min.js](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs.min.js)
 
 If you don't want all of the proof of work algorithms, there are some alternative smaller packages:
 
-* [pkg/iota-pico-lib-nodejs-none.js](./pkg/iota-pico-lib-nodejs-none.js) - No Proof Of Work algorithms
-* [pkg/iota-pico-lib-nodejs-none.min.js](./pkg/iota-pico-lib-nodejs-none.min.js) - No Proof Of Work algorithms
-* [pkg/iota-pico-lib-nodejs-ccurl.js](./pkg/iota-pico-lib-nodejs-ccurl.js) - Fastest for Platform
-* [pkg/iota-pico-lib-nodejs-ccurl.min.js](./pkg/iota-pico-lib-nodejs-ccurl.min.js) - Fastest for Platform
+* [pkg/iota-pico-lib-nodejs-none.js](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs-none.js) - No Proof Of Work algorithms
+* [pkg/iota-pico-lib-nodejs-none.min.js](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs-none.min.js) - No Proof Of Work algorithms
+* [pkg/iota-pico-lib-nodejs-ccurl.js](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs-ccurl.js) - Fastest for Platform
+* [pkg/iota-pico-lib-nodejs-ccurl.min.js](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs-ccurl.min.js) - Fastest for Platform
 
 # TypeScript Definitions
 
-TypeScript definitions can be found in the [pkg/iota-pico-lib-nodejs.d.ts](./pkg/iota-pico-lib-nodejs.d.ts) and should be located automatically by your developments tools.
+TypeScript definitions can be found in the [pkg/iota-pico-lib-nodejs.d.ts](https://github.com/iota-pico/lib-nodejs/blob/master/pkg/iota-pico-lib-nodejs.d.ts) and should be located automatically by your developments tools.
 
 # Usage
 
@@ -81,10 +81,13 @@ Come and find us on the IOTA [Discord](https://discordapp.com/invite/fNGZXvh) de
 # Donations
 
 IOTA donations are always welcome :smile:
+
+![QR Code for Trinity](https://raw.githubusercontent.com/iota-pico/lib-nodejs/master/donation.png)
+
 ```shell
 QWJXX99QDEYWUWXEGA9QXSNOWOKHMFKCMSZTXDFLRZAFQRPQTHQDXSZWQQTAHNDNRYHMIKJYWQLKTFHBWSAOJDHAMB
 ```
 
 # License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/iota-pico/lib-nodejs/blob/master/LICENSE) file for details.
