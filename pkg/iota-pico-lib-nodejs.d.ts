@@ -247,7 +247,7 @@ export class StringHelper {
      * @param value string to test if is is ASCII.
      * @returns True if the object is all ASCII.
      */
-    static isAscii(value: string): boolean;
+    static isASCII(value: string): boolean;
     /**
      * Encode non ASCII characters with control characters.
      * @param value The string value to escape.
@@ -2139,7 +2139,7 @@ export class TransactionHelper {
     /**
      * Create the hash for a transaction.
      * @param transaction The transaction to generate the hash.
-     * @returns The hash of thr transaction.
+     * @returns The hash of the transaction.
      */
     static hash(transaction: Transaction): Hash;
 }
