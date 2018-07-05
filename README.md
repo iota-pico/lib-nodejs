@@ -1,11 +1,11 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/iota-pico/iota-pico-lib-nodejs/master/LICENSE) [![Build Status](https://travis-ci.org/iota-pico/iota-pico-lib-nodejs.svg?branch=master)](https://travis-ci.org/iota-pico/iota-pico-lib-nodejs) 
 
-
 # IOTA Pico Framework Lib for NodeJS
 
 The IOTA Pico Framework library is an alternative to the official [iota.lib.js](https://github.com/iotaledger/iota.lib.js)
 
 The library is a bundle of all the following components:
+
 * [@iota-pico/core](https://github.com/iota-pico/iota-pico-core) - Core functions and helper classes.
 * [@iota-pico/data](https://github.com/iota-pico/iota-pico-data) - Data objects.
 * [@iota-pico/api](https://github.com/iota-pico/iota-pico-api) - REST API.
