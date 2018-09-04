@@ -42,7 +42,7 @@ install:
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
   - cd ../
-  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pow-srvio.git pow-js
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iota-pico/pow-srvio.git pow-srvio
   - cd pow-srvio
   - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
   - npm link
