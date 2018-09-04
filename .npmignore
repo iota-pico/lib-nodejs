@@ -15,3 +15,5 @@ coverage
 webpack.config.*
 .babelrc
 dist/**/*
+rif1.config.js
+rif2.config.js
