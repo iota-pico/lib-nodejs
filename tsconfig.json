@@ -1,24 +1,24 @@
 {
     "compilerOptions": {
-        "target": "es2017",
+        "target": "es6",
         "lib": [
             "es2016",
             "dom"
         ],
         "outDir": "dist",
         "module": "commonjs",
-        "declaration": false,
+        "declaration": true,
         "moduleResolution": "node",
         "noImplicitAny": true,
         "noImplicitThis": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "strictNullChecks": false,
-        "types": [],
         "esModuleInterop": true,
         "stripInternal": true,
         "inlineSourceMap": true,
-        "noImplicitUseStrict": true
+        "noImplicitUseStrict": true,
+        "importHelpers": true
     },
     "include": [
         "src/**/*"

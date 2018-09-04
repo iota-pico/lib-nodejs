@@ -5,3 +5,5 @@ package-lock.*
 .nyc_output
 .vscode
 *.log
+src/*/**/*
+dist/**/*

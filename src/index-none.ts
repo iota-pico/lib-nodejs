@@ -1,14 +1,14 @@
 /**
  * Combined index of all the modules.
  */
-export * from "@iota-pico/core";
-export * from "@iota-pico/data";
-export * from "@iota-pico/api";
-export * from "@iota-pico/crypto";
-export * from "@iota-pico/business";
-export * from "@iota-pico/pal-nodejs";
+export * from "./core";
+export * from "./data";
+export * from "./api";
+export * from "./crypto";
+export * from "./business";
+export * from "./pal-nodejs";
 
-import {PAL} from "@iota-pico/pal-nodejs";
+import {PAL} from "./pal-nodejs";
 
 (async function (): Promise<void> {
     await PAL.initialize();
