@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserJsPlugin = require('terser-webpack-plugin');
 
 const pkgFolder = path.join(__dirname, './pkg');
 const bootstrapFile = path.join(pkgFolder, 'bootstrap.js');
@@ -16,11 +16,6 @@ if (!isDir) {
     fs.mkdirSync(pkgFolder);
 }
 fs.writeFileSync(bootstrapFile, `exports.default = require("../dist/index-${process.env.LIB_VER}");`);
-
-const plugins = [];
-if (isProd) {
-    plugins.push(new UglifyJsPlugin());
-}
 
 module.exports = {
     entry: bootstrapFile,
@@ -53,5 +48,7 @@ module.exports = {
         __dirname: false,
         __filename: false
     },
-    plugins
+    optimization: {
+        minimizer: isProd ? [ new TerserJsPlugin() ] : []
+    }
 };

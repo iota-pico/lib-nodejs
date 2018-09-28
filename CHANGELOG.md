@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.0.1
+
+* Refactored NetworkClient to make it more versatile
+* Export AddressHelper class from @iota-pico/business
+* Webpack bundling switch from Uglify to Terser
+
+## v1.0.0
+
+* Final 1.0.0 Release
+* Lib files shrunk with different WebPack options and babel removal
+* Updated dependencies and README
+
+## v0.9.9
+
+* Updated dependencies and README
+
+## v0.9.8
+
+* Updated dependencies
+
 ## v0.9.7
 
 * Reduced umd module size with externals
