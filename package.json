@@ -66,9 +66,9 @@
     },
     "devDependencies": {
         "@types/emscripten": "0.0.31",
-        "@types/ffi": "^0.2.0",
+        "@types/ffi": "^0.2.1",
         "@types/jws": "^3.1.1",
-        "@types/node": "^10.11.2",
+        "@types/node": "^10.12.8",
         "cross-env": "^5.2.0",
         "ncp": "^2.0.0",
         "npm-run-all": "^4.1.3",
@@ -76,8 +76,8 @@
         "rimraf": "^2.6.2",
         "source-map-support": "^0.5.6",
         "terser-webpack-plugin": "^1.1.0",
-        "typescript": "^3.1.1",
-        "webpack": "^4.20.2",
-        "webpack-cli": "^3.1.1"
+        "typescript": "^3.1.6",
+        "webpack": "^4.25.1",
+        "webpack-cli": "^3.1.2"
     }
 }
