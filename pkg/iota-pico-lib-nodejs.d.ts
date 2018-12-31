@@ -2268,7 +2268,7 @@ export class Curl implements ISponge {
      */
     getConstant(name: string): number;
     /**
-     * Get the state.
+     * Get the internal state.
      * @returns The state.
      */
     getState(): Int8Array;
@@ -2313,7 +2313,7 @@ export class Kerl implements ISponge {
      */
     getConstant(name: string): number;
     /**
-     * Get the state.
+     * Get the internal state.
      * @returns The state.
      */
     getState(): Int8Array;
@@ -2392,7 +2392,7 @@ export class BundleHelper {
      */
     static validateSignatures(signedBundle: Bundle, inputAddress: Address): boolean;
     /**
-     * Prepare a bundle.
+     * Prepare a bundle for attaching.
      * @param timeService To use for stamping the transactions.
      * @param transfers The transfers to add to the bundle.
      * @returns Bundle information.
@@ -2424,7 +2424,7 @@ export class BundleHelper {
      */
     static signTransactions(bundle: Bundle, index: number, firstUnsignedIndex: number, keyTrits: Int8Array, addressTrytes: string, security: AddressSecurity): void;
     /**
-     * Finalize a bundle.
+     * Finalize a bundle ready for attaching.
      * @param bundle The bundle to finalize.
      */
     static finalizeBundle(bundle: Bundle): void;
@@ -2686,7 +2686,7 @@ export class MultiSigClient {
      */
     static getDigest(seed: Hash, index: number, security: AddressSecurity): Trytes;
     /**
-     * Validate address.
+     * Validate the address against the digests.
      * @param address The address to validate against the digests.
      * @param digests The digests to use to validate the address.
      * @returns True if the address matches the digests.
