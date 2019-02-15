@@ -61,23 +61,23 @@
         "dist": "npm-run-all build pkg"
     },
     "dependencies": {
-        "big-integer": "^1.6.40",
+        "big-integer": "^1.6.41",
         "ffi": "github:node-ffi/node-ffi"
     },
     "devDependencies": {
         "@types/emscripten": "0.0.31",
-        "@types/ffi": "^0.2.1",
-        "@types/jws": "^3.1.1",
-        "@types/node": "^10.12.18",
+        "@types/ffi": "^0.2.2",
+        "@types/jws": "^3.2.0",
+        "@types/node": "^11.9.4",
         "cross-env": "^5.2.0",
         "ncp": "^2.0.0",
         "npm-run-all": "^4.1.5",
-        "replace-in-file": "^3.4.2",
-        "rimraf": "^2.6.2",
-        "source-map-support": "^0.5.6",
-        "terser-webpack-plugin": "^1.2.1",
-        "typescript": "^3.2.2",
-        "webpack": "^4.28.3",
-        "webpack-cli": "^3.1.2"
+        "replace-in-file": "^3.4.3",
+        "rimraf": "^2.6.3",
+        "source-map-support": "^0.5.10",
+        "terser-webpack-plugin": "^1.2.2",
+        "typescript": "^3.3.3",
+        "webpack": "^4.29.3",
+        "webpack-cli": "^3.2.3"
     }
 }

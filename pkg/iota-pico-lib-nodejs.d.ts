@@ -2268,7 +2268,7 @@ export class Curl implements ISponge {
      */
     getConstant(name: string): number;
     /**
-     * Get the internal state.
+     * Get the state of the curl hash.
      * @returns The state.
      */
     getState(): Int8Array;
@@ -2313,7 +2313,7 @@ export class Kerl implements ISponge {
      */
     getConstant(name: string): number;
     /**
-     * Get the internal state.
+     * Get the state of the kerl hash.
      * @returns The state.
      */
     getState(): Int8Array;
