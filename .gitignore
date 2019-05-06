@@ -1,6 +1,7 @@
 node_modules
 .history
 *.tgz
+package-lock.json
 .nyc_output
 .vscode
 *.log
