@@ -65,7 +65,7 @@
         "ffi": "github:node-ffi/node-ffi"
     },
     "devDependencies": {
-        "@types/emscripten": "^0.0.31",
+        "@types/emscripten": "0.0.31",
         "@types/ffi": "^0.2.2",
         "@types/jws": "^3.2.0",
         "@types/node": "^11.11.6",
