@@ -6,4 +6,3 @@ node_modules
 *.log
 src/*/**/*
 dist/**/*
-package-lock.json
